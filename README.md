@@ -1,4 +1,48 @@
 <<<<<<< HEAD
+
+# Firebase Database
+
+## User Info
+
+user_info{
+user0{
+first_name: "Diana",
+last_name: "Yue",
+email: "dianayue@gmail.com",
+rankings: {
+search0: 1,
+search1: 2,
+search3: 10
+}
+},
+user1{
+first_name: "Justin",
+last_name: "Ye",
+email: "justin@gmail.com",
+rankings: {
+search0: 1,
+search1: 2,
+search3: 10
+}
+}
+}
+
+The first schema stores each user's information and their rankings. Each user is stored by user0, user1, etc. Inside, we store their name and email (strings) and a map of their ranks as integers for each search query result we present to them.
+
+## Search Queries
+
+queries{
+query0{
+query: "COVID-19",
+returns{
+return0: "http://www.google.com/,
+return1: "hellofresh.com"
+}
+}
+}
+
+The queries schema stores (query0, query1, etc) each query and its returned results. Each query would first have a value query that corresponds to what we searched. There's also a returns value that maps each website that's returned from that search.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,7 +112,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `yarn build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
+# This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
 # f22-t4sg-search-evaluator
->>>>>>> 8d2a40b045258e1e50bf860b4acdb7af0554bf8b
+
+> > > > > > > 8d2a40b045258e1e50bf860b4acdb7af0554bf8b
