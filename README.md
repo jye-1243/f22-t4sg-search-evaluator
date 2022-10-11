@@ -3,11 +3,9 @@
 The database stores three types of object: user info data, query data, and survey response data. The schemas are as follows:
 ## User Info
 
-`
-  user_info{
+` user_info{
 
-  }
-`
+  }`
 
 The first schema stores each user's information and their rankings. Each user is stored by user0, user1, etc. Inside, we store their name and email (strings) and a map of their ranks as integers for each search query result we present to them.
 
