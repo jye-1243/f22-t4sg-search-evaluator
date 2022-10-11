@@ -16,6 +16,7 @@ function App() {
   gapi.load('client:auth2', initClient);
   });
   const onSuccess = (res) => {
+    setProfile(res.profileObj.name);
     console.log('success:', res);
   };
   const onFailure = (err) => {
@@ -24,9 +25,17 @@ function App() {
   const logOut = () => {
     setProfile(null);
   };
+  const centerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '1.5rem',
+    height: '20vh',
+    flexDirection: 'column',
+  };
   return (
-    <div>
-        <h2>Cambrdige Search Evaluator</h2>
+    <div style={centerStyle}>
+        <h2>City of Cambridge Search Evaluator {profile}</h2>
             <GoogleLogin
                 clientId={clientId}
                 buttonText="Sign in with Google"
