@@ -3,6 +3,8 @@ import './App.css';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 
+
+
 function Login() {
   const [ profile, setProfile ] = useState([]);
   const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
@@ -40,6 +42,7 @@ function Login() {
                 clientId={clientId}
                 buttonText="Sign in with Google"
                 onSuccess={onSuccess}
+                // redirectUri={'http://localhost:3000/Queries'}
                 onFailure={onFailure}
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}

@@ -5,11 +5,11 @@ import {useState} from 'react';
 const QueryBlock = (props) => {
 
 const results = [
-  {i: 0, name: 'Search result 1', description: 'This is a description', relevance: 0}, 
-  {i: 1, name: 'Search result 2', description: 'Currently describing Search Result 2. Accompanying text', relevance: 0},
-  {i: 2, name: 'Search result 3', description: 'yea..h', relevance: 0},
-  {i: 3, name: 'Four', description: 'Yeah yeah yeah', relevance: 0},
-  {i: 4, name: 'Fifth search result', description: "Lorem Ipsum is simply dummy text. Search result", relevance: 0}
+  {i: 0, name: 'Search result 1', description: 'This is a description', url: 'https://cambridgema.gov'}, 
+  {i: 1, name: 'Search result 2', description: 'Currently describing Search Result 2. Accompanying text', url: 'https://cambridgema.gov'},
+  {i: 2, name: 'Search result 3', description: 'yea..h', url: 'https://cambridgema.gov'},
+  {i: 3, name: 'Four', description: 'Yeah yeah yeah', url: 'https://cambridgema.gov' },
+  {i: 4, name: 'Fifth search result', description: "Lorem Ipsum is simply dummy text. Search result", url: 'https://cambridgema.gov'}
 ];
 
 const rele = [
@@ -64,6 +64,7 @@ const handClick = (idx, rel) => {
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
             <p className="text-xl text-gray-700 font-bold mb-5">{s.name}</p>
             <p>{s.description}</p>
+            <p>{s.url}</p>
             </Table.Cell>
             <Table.Cell>
             
