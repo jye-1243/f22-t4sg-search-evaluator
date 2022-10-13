@@ -2,7 +2,7 @@ import {Label, Dropdown, Table, TextInput, Checkbox, Button, Rating} from 'flowb
 import React from 'react';
 import {useState} from 'react';
 
-const QueryBlock = () => {
+const QueryBlock = (props) => {
 
 const results = [
   {i: 0, name: 'Search result 1', description: 'This is a description', relevance: 0}, 
@@ -37,7 +37,7 @@ const handClick = (idx, rel) => {
 
     <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
     <p className="text-3xl text-gray-700 font-bold mb-5">
-            QUERY
+            {props.query}
         </p>
 
 
