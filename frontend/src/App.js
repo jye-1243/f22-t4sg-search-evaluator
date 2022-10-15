@@ -7,6 +7,8 @@ import {useNavigate} from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Queries from "./Queries";
 import Login from "./Login";
+import ThankYou from "./ThankYou";
+
 
 
 
@@ -17,7 +19,8 @@ const App = () => {
           {/* <HomeLayoutRoute path="/" element={<App />} /> */}
           {/* <PrivateRoute path="/" element={<PrivateScreen/>} /> */}
           <Route path="/*" element={<Login />} />
-          <Route path="/Queries" element={<Queries/>} />
+          <Route path="/queries" element={<Queries/>} />
+          <Route path="/thankyou" element={<ThankYou/>} />
         </Routes>
 
   )
@@ -27,23 +30,3 @@ export default App;
 
 
 
-// function PrivateRoute({ children, ...rest }) {
-//   let auth = useAuth();
-//   return (
-//     <Route
-//       {...rest}
-//       render={({ location }) =>
-//         auth.user ? (
-//           children
-//         ) : (
-//           <Redirect
-//             to={{
-//               pathname: "/",
-//               state: { from: location }
-//             }}
-//           />
-//         )
-//       }
-//     />
-//   );
-// }
