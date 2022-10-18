@@ -16,8 +16,6 @@ const App = () => {
   return (
 
     <Routes> 
-          {/* <HomeLayoutRoute path="/" element={<App />} /> */}
-          {/* <PrivateRoute path="/" element={<PrivateScreen/>} /> */}
           <Route path="/*" element={<Login />} />
           <Route path="/queries" element={<Queries/>} />
           <Route path="/thankyou" element={<ThankYou/>} />

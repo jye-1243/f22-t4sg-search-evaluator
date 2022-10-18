@@ -10,28 +10,27 @@ const Queries = props => {
 
   const {state} = useLocation();
   const {uid} = state; //uid: user ID. if queries was not navigated to from the login page, state is null, which returns an error
-
+  const {queries} = state;
 
   const navigate = useNavigate();
 
   const navigateToThankYou = () => {
     if(uid.length != 0){
+      console.log(queries);
       navigate('/thankyou');
     }
   };
 
   return (
     <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
-      <QueryBlock query="Sample Query"/>
-      <br></br>
-      <QueryBlock query="Another Query"/>
+      {queries.map((q) => (
+      <QueryBlock query={"query: " + q.query_text} query_id={q.id} results={q.returns} email={uid}/>
+      ))}
+
       <Button size="xl"  onClick={navigateToThankYou}>
-    Submit
+    Finish responses
     </Button>
     </div>
-
-
-
 
   )
 }

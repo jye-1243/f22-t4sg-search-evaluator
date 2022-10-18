@@ -5,20 +5,14 @@ import { gapi } from 'gapi-script';
 import {Button} from 'flowbite-react';
 import {useNavigate} from 'react-router-dom';
 import db from "./firebase";
-import firebase from 'firebase/compat/app';
-import { doc, getDoc } from "firebase/firestore";
-import { onSnapshot, collection } from "firebase/firestore";
-
 
 function Login() {
 
   const [ profile, setProfile ] = useState([]);
+  const [ id, setId] = useState([]);
 
-  const [ firstName, setFirstName ] = useState([]);
-  const [ lastName, setLastName ] = useState([]);
-  const [ email, setEmail ] = useState([]);
-  const [ id, setId ] = useState([]);
-  const [queries, setQueries] = useState([]);
+
+  
 
   const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
   useEffect(() => {
@@ -30,70 +24,11 @@ function Login() {
     };
   gapi.load('client:auth2', initClient);
   });
-
-
-  async function getMarker() {
-    const events = await firebase.firestore().collection('queries')
-    events.get().then((querySnapshot) => {
-        const tempDoc = querySnapshot.docs.map((doc) => {
-          return { id: doc.id }
-        })
-        console.log(tempDoc)
-      })
-  }
-
-  useEffect(
-    () =>
-      onSnapshot(collection(db, "queries"), (snapshot) =>
-        setQueries(snapshot.docs.slice(0,4).map((doc) => ({ ...doc.data(), id: doc.id })))
-      ),
-    []
-  );
-
-  
-
-
   const onSuccess = (res) => {
     setProfile(res.profileObj.name);
     console.log('success:', res);
     setId(res.profileObj.googleId);
-    setEmail(res.profileObj.email);
-    setFirstName(res.profileObj.givenName);
-    setLastName(res.profileObj.familyName);
-
-
-    db.collection("user_info").add({
-      email: email,
-      first_name: firstName,
-      id: id,
-      last_name: lastName
-    });
-
-    console.log(queries);
-
-    {queries.map((q) => (
-      console.log(q.returns[0])
-    ))}
-
-//     const cityRef = db.collection('queries').doc("0IBzal0Opk8KyDvjTmcZ");
-//   const doc =  cityRef.get();
-// if (!doc.exists) {
-//   console.log('No such document!');
-// } else {
-//   console.log('Document data:', doc.data());
-// }
-
-//     const qs = getMarker();
-//     console.log("oh my god!");
-//     console.log(qs[0]);
-//     console.log(getDoc("0IBzal0Opk8KyDvjTmcZ").data());
-//     console.log("id: " + id);
-
   };
-
-
-
-
   const onFailure = (err) => {
     console.log('failed:', err);
   };
@@ -109,28 +44,32 @@ function Login() {
     flexDirection: 'column',
   };
 
-  const navigate = useNavigate();
-
+  const submit = (e) => {
+    e.preventDefault();
+    db.collection("").add({
+      name: customerName,
+      password: customerPassword,
+    });
   
+    setCustomerName("");
+    setCustomerPassword("");
+  };
+
+  const navigate = useNavigate();
 
   const navigateToQueries = () => {
     console.log(profile);
     // 👇️ navigate to /contacts
-    console.log(email);
-    navigate('/queries', { state: { uid: id, queries: queries} });
+    console.log(id);
+    navigate('/queries', { state: { uid: id, name: "yyee"} });
   };
-
-
-
-
-
-
-
   return (
     <div style={centerStyle} className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
 
         <h2 className="text-3xl text-gray-700 font-bold mb-5">City of Cambridge Search Evaluator </h2>
-        
+        {/* <div>
+            {profile.length === 0 ? "Not logged in" : "User: " + profile} 
+        </div> */}
         <div>
         {profile.length === 0 ? "Not logged into": <Button onClick={navigateToQueries}>Open survey</Button>} 
         </div>
