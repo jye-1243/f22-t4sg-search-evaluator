@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin, GoogleLogout, useGoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import {Button} from 'flowbite-react';
 import {useNavigate} from 'react-router-dom';
 import db from "./firebase";
 import firebase from 'firebase/compat/app';
-import { doc, getDoc } from "firebase/firestore";
 import { onSnapshot, collection } from "firebase/firestore";
 
+const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
 
 function Login() {
-
   const [ profile, setProfile ] = useState([]);
 
   const [ firstName, setFirstName ] = useState([]);
@@ -20,7 +19,6 @@ function Login() {
   const [ id, setId ] = useState([]);
   const [queries, setQueries] = useState([]);
 
-  const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -30,7 +28,6 @@ function Login() {
     };
   gapi.load('client:auth2', initClient);
   });
-
 
   async function getMarker() {
     const events = await firebase.firestore().collection('queries')
@@ -49,9 +46,6 @@ function Login() {
       ),
     []
   );
-
-  
-
 
   const onSuccess = (res) => {
     setProfile(res.profileObj.name);
@@ -74,44 +68,27 @@ function Login() {
     {queries.map((q) => (
       console.log(q.returns[0])
     ))}
-
-//     const cityRef = db.collection('queries').doc("0IBzal0Opk8KyDvjTmcZ");
-//   const doc =  cityRef.get();
-// if (!doc.exists) {
-//   console.log('No such document!');
-// } else {
-//   console.log('Document data:', doc.data());
-// }
-
-//     const qs = getMarker();
-//     console.log("oh my god!");
-//     console.log(qs[0]);
-//     console.log(getDoc("0IBzal0Opk8KyDvjTmcZ").data());
-//     console.log("id: " + id);
-
+    
+    navigateToQueries();
   };
-
-
-
 
   const onFailure = (err) => {
     console.log('failed:', err);
   };
   const logOut = () => {
     setProfile(null);
+    window.location.reload();
   };
   const centerStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: '1.5rem',
-    height: '20vh',
+    height: '30vh',
     flexDirection: 'column',
   };
 
   const navigate = useNavigate();
-
-  
 
   const navigateToQueries = () => {
     console.log(profile);
@@ -120,35 +97,24 @@ function Login() {
     navigate('/queries', { state: { uid: id, queries: queries} });
   };
 
-
-
-
-
-
-
   return (
     <div style={centerStyle} className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
-
         <h2 className="text-3xl text-gray-700 font-bold mb-5">City of Cambridge Search Evaluator </h2>
-        
-        <div>
-        {profile.length === 0 ? "Not logged into": <Button onClick={navigateToQueries}>Open survey</Button>} 
-        </div>
-
-        
-        
-            
-            <GoogleLogin
+        {/* <div>
+        {profile.length === 0 ? "Please Log In": <Button onClick={navigateToQueries}>Open survey</Button>} 
+        </div> */}
+            <GoogleLogin 
                 clientId={clientId}
                 buttonText="Sign in with Google"
                 onSuccess={onSuccess}
-                redirectUri={'http://localhost:3000/Queries'}
+                redirectUri={'http://localhost:3000/queries'}
                 onFailure={onFailure}
                 cookiePolicy={'single_host_origin'}
                 isSignedIn={true}
             />
     </div>
-  );
+  )
 }
 
 export default Login;
+

@@ -11,7 +11,6 @@ import ThankYou from "./ThankYou";
 
 
 
-
 const App = () => {
   return (
 
@@ -24,7 +23,4 @@ const App = () => {
   )
 }
 export default App;
-
-
-
 
