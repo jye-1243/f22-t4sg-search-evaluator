@@ -11,9 +11,6 @@ function Login() {
   const [ profile, setProfile ] = useState([]);
   const [ id, setId] = useState([]);
 
-
-  
-
   const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
   useEffect(() => {
     const initClient = () => {

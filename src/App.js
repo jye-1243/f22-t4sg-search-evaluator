@@ -18,12 +18,8 @@ const App = () => {
           <Route path="/*" element={<Login />} />
           
     </Routes>
-    // <div> Hello World</div>
-
+    //<div> Hello World</div>
   )
 }
 export default App;
-
-
-
 
