@@ -15,6 +15,8 @@ const App = () => {
           <Route path="/queries" element={<Queries/>} />
           <Route path="/thankyou" element={<ThankYou/>} />
           <Route path="/*" element={<Login />} />
+          
+          <Route path="/f22-t4sg-search-evaluator" element={<Login />} />
     </Routes>
 
   )
