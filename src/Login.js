@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin, GoogleLogout, useGoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import {Button} from 'flowbite-react';
 import {useNavigate} from 'react-router-dom';
 import db from "./firebase";
 import firebase from 'firebase/compat/app';
-import { doc, getDoc } from "firebase/firestore";
 import { onSnapshot, collection } from "firebase/firestore";
 
+const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
 
 function Login() {
 
@@ -20,8 +20,6 @@ function Login() {
   const [ id, setId ] = useState([]);
   const [queries, setQueries] = useState([]);
   const [preExistingUsers, setExistingUsers] = useState([]);
-
-  const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
 
   useEffect(() => {
     const initClient = () => {
@@ -92,13 +90,14 @@ function Login() {
     setEmail('');
     setId('');
     setProfile([]);
+    window.location.reload();
   };
   const centerStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: '1.5rem',
-    height: '20vh',
+    height: '30vh',
     flexDirection: 'column',
   };
 
@@ -114,7 +113,7 @@ function Login() {
         <h2 className="text-3xl text-gray-700 font-bold mb-5">City of Cambridge Search Evaluator {firstName} </h2>
         
         <div>
-        {profile.length === 0 ? <h3>Not logged into Google</h3>: <Button onClick={navigateToQueries}>Open survey</Button>} 
+        {profile.length === 0 ? <h3>Please Log In</h3>: <Button onClick={navigateToQueries}>Open survey</Button>} 
         {profile.length === 0 ?
             <GoogleLogin
             clientId={clientId}
@@ -135,7 +134,8 @@ function Login() {
         }
         </div>
     </div>
-  );
+  )
 }
 
 export default Login;
+

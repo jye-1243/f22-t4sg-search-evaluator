@@ -8,6 +8,11 @@ import {
   Navigate
 } from "react-router-dom";
 
+import { GoogleLogout } from 'react-google-login';
+import { Login } from './Login';
+
+const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
+  
 const Queries = props => {
 
   const navigate = useNavigate();
@@ -28,17 +33,37 @@ const Queries = props => {
     }
   };
 
+  const logOut = () => {
+    // setProfile(null);
+    navigate('/*');
+    window.location.reload();
+  };
+
   return (
     <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
+      <div style={{display: "flex", justifyContent: "right"}}>
+      <GoogleLogout
+                clientId={clientId}
+                buttonText="Logout"
+                onLogoutSuccess={logOut}
+                redirectUri={'http://localhost:3000/'}
+            />
+      </div>
       {queries.map((q) => (
       <QueryBlock key={q.id} query={"query: " + q.query_text} query_id={q.id} results={q.returns} email={uid}/>
       ))}
-
-      <Button size="xl"  onClick={navigateToThankYou}>
-        Finish responses
-      </Button>
+      <GoogleLogout
+          clientId={clientId}
+          render={(renderProps) => (
+            <Button size='xl' onClick={renderProps.onClick} disabled={renderProps.disabled}>
+              Submit All
+            </Button>
+          )}
+          buttonText="Submit All"
+          onLogoutSuccess={navigateToThankYou}
+          redirectUri={'http://localhost:3000/thankyou'}
+          />
     </div>
-
   )
 }
 export default Queries;
