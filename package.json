@@ -1,7 +1,7 @@
 {
-  "homepage": "http://jye-1243.github.io/f22-t4sg-search-evaluator",
   "name": "f22-t4sg-search-evaluator",
   "version": "0.1.0",
+  "homepage": "http://jye-1243.github.io/f22-t4sg-search-evaluator/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
