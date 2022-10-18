@@ -12,7 +12,7 @@ root.render(
 
 
   <React.StrictMode>
-     <BrowserRouter>
+     <BrowserRouter basename='f22-t4sg-search-evaluator'>
       <Routes>
         {/* </Routes><Route path="/" element={ <App /> }> */}
 
