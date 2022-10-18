@@ -31,9 +31,6 @@ const [submitted, setSubmitted] = useState(false);
 const len = props.results.length;
 
 
-
-
-
 const makeArr = () => {
   let content = [];
   for (let i = 0; i < props.results.length; i++) {
@@ -79,99 +76,78 @@ const handSubmit = () => {
 };
 
   return (
-
     <div >
-    <p className="text-3xl text-gray-700 font-bold mb-5">
-            {props.query}
-        </p>
+      <p className="text-3xl text-gray-700 font-bold mb-5">
+        {props.query}
+      </p>
 
+      <Table>
+        <Table.Head>
+          <Table.HeadCell>
+            Result
+          </Table.HeadCell>
+          <Table.HeadCell>
+            <span>
+              Rating
+            </span>
+          </Table.HeadCell>
+        </Table.Head>
 
+        <Table.Body className="divide-y">
+          {loaded.map(s => {
+              return (
+              <Table.Row key={s} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                  <p className="text-l text-gray-700 font-bold mb-5">{s[1]} </p>
+                  <p>
+                  {s[3].length > 80 ? s[3].substring(0, 80)+"..." : s[3]} 
+                  </p>            
+                  <a href={s[2]} style={{ color: 'blue' }}>{s[2].length > 40 ? s[2].substring(0, 40) +"..." : s[2]} </a>
+                </Table.Cell>
 
-    <Table>
-    <Table.Head>
-    <Table.HeadCell>
-        Result
-    </Table.HeadCell>
-    <Table.HeadCell>
-        <span>
-        Rating
-        </span>
-    </Table.HeadCell>
-    </Table.Head>
-
-    <Table.Body className="divide-y">
-
-
-    {loaded.map(s => {
-        return (
-
-        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-            <p className="text-l text-gray-700 font-bold mb-5">{s[1]}</p>
-            
-            <p>
-            {s[3].length > 80 ? s[3].substring(0, 80)+"..." : s[3]} 
-              </p>
-
-
-            
-            <a href={s[2]} style={{ color: 'blue' }}>{s[2].length > 40 ? s[2].substring(0, 40) +"..." : s[2]} </a>
-            </Table.Cell>
-            <Table.Cell>
-            
-            <Button.Group >
-          <Button color={data[s[0]].r == 0 ? "info" : "gray"} onClick={() => {
-                handClick(s[0], 0);
-                
-                        }}>
-        Irrelevant
-        </Button>
-        <Button color={data[s[0]].r == 1 ? "info" : "gray"} onClick={() => {
-                handClick(s[0], 1);
-                        }}>
-        Partially relevant
-        </Button>
-        <Button color={data[s[0]].r == 2 ? "info" : "gray"} onClick={() => {
-                handClick(s[0], 2);
-                        }}>
-        Relevant
-        </Button>
-        <Button color={data[s[0]].r == 3 ? "info" : "gray"} onClick={() => {
-                handClick(s[0], 3);
-                        }}>
-        Perfect
-        </Button>
-    </Button.Group>
-    </Table.Cell>
-            </Table.Row>
-
-            
-          
-            
+                <Table.Cell>
+                  <Button.Group >
+                    <Button color={data[s[0]].r == 0 ? "info" : "gray"} onClick={() => {
+                      handClick(s[0], 0);
+                    }}>
+                      Irrelevant
+                    </Button>
+                    <Button color={data[s[0]].r == 1 ? "info" : "gray"} onClick={() => {
+                      handClick(s[0], 1);
+                    }}>
+                      Partially relevant
+                    </Button>
+                    <Button color={data[s[0]].r == 2 ? "info" : "gray"} onClick={() => {
+                      handClick(s[0], 2);
+                    }}>
+                      Relevant
+                    </Button>
+                    <Button color={data[s[0]].r == 3 ? "info" : "gray"} onClick={() => {
+                            handClick(s[0], 3);
+                    }}>
+                      Perfect
+                    </Button>
+                  </Button.Group>
+                </Table.Cell>
+              </Table.Row>           
             );
-            })}
-        
+          })}
     </Table.Body>
-
     </Table>
 
     <div className="w-3/12">
       <br></br>
-  <Button disabled={submitted} onClick={handSubmit}>
-    Submit
-  </Button>
-</div>
+        <Button disabled={submitted} onClick={handSubmit}>
+          Submit
+        </Button>
+        </div>
 
-<p>
+        <p>
   
-</p>
-<br>
-</br>
-
-
-
+      </p>
+    <br>
+    </br>
     </div>
-
   );
 }
 export default QueryBlock;

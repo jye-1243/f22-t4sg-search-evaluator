@@ -31,12 +31,12 @@ const Queries = props => {
   return (
     <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
       {queries.map((q) => (
-      <QueryBlock query={"query: " + q.query_text} query_id={q.id} results={q.returns} email={uid}/>
+      <QueryBlock key={q.id} query={"query: " + q.query_text} query_id={q.id} results={q.returns} email={uid}/>
       ))}
 
       <Button size="xl"  onClick={navigateToThankYou}>
-    Finish responses
-    </Button>
+        Finish responses
+      </Button>
     </div>
 
   )
