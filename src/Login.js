@@ -21,6 +21,7 @@ function Login() {
   const [queries, setQueries] = useState([]);
 
   const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
+  // const clientId = '';
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -30,7 +31,6 @@ function Login() {
     };
   gapi.load('client:auth2', initClient);
   });
-
 
   async function getMarker() {
     const events = await firebase.firestore().collection('queries')
@@ -49,9 +49,6 @@ function Login() {
       ),
     []
   );
-
-  
-
 
   const onSuccess = (res) => {
     setProfile(res.profileObj.name);
@@ -75,30 +72,18 @@ function Login() {
       console.log(q.returns[0])
     ))}
 
-//     const cityRef = db.collection('queries').doc("0IBzal0Opk8KyDvjTmcZ");
-//   const doc =  cityRef.get();
-// if (!doc.exists) {
-//   console.log('No such document!');
-// } else {
-//   console.log('Document data:', doc.data());
-// }
-
-//     const qs = getMarker();
-//     console.log("oh my god!");
-//     console.log(qs[0]);
-//     console.log(getDoc("0IBzal0Opk8KyDvjTmcZ").data());
-//     console.log("id: " + id);
-
   };
-
-
-
 
   const onFailure = (err) => {
     console.log('failed:', err);
   };
   const logOut = () => {
-    setProfile(null);
+    console.log("Logged Out")
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setId('');
+    setProfile([]);
   };
   const centerStyle = {
     display: 'flex',
@@ -111,8 +96,6 @@ function Login() {
 
   const navigate = useNavigate();
 
-  
-
   const navigateToQueries = () => {
     console.log(profile);
     // 👇️ navigate to /contacts
@@ -120,33 +103,32 @@ function Login() {
     navigate('/queries', { state: { uid: id, queries: queries} });
   };
 
-
-
-
-
-
-
   return (
     <div style={centerStyle} className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
 
-        <h2 className="text-3xl text-gray-700 font-bold mb-5">City of Cambridge Search Evaluator </h2>
+        <h2 className="text-3xl text-gray-700 font-bold mb-5">City of Cambridge Search Evaluator {firstName} </h2>
         
         <div>
-        {profile.length === 0 ? "Not logged into": <Button onClick={navigateToQueries}>Open survey</Button>} 
-        </div>
-
-        
-        
-            
+        {profile.length === 0 ? <h3>Not logged into Google</h3>: <Button onClick={navigateToQueries}>Open survey</Button>} 
+        {profile.length === 0 ?
             <GoogleLogin
-                clientId={clientId}
-                buttonText="Sign in with Google"
-                onSuccess={onSuccess}
-                redirectUri={'http://localhost:3000/Queries'}
-                onFailure={onFailure}
-                cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
-            />
+            clientId={clientId}
+            buttonText="Sign in with Google"
+            onSuccess={onSuccess}
+            redirectUri={'http://localhost:3000'}
+            onFailure={onFailure}
+            cookiePolicy={'single_host_origin'}
+            isSignedIn={true}
+        />
+        :
+          <GoogleLogout 
+            clientId={clientId}
+            buttonText="Log Out"
+            onLogoutSuccess={logOut}
+            redirectUri={'http://localhost:3000'}
+          />
+        }
+        </div>
     </div>
   );
 }

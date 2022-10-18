@@ -4,19 +4,26 @@ import {useState} from 'react';
 import { useLocation } from "react-router-dom";
 import {Button} from "flowbite-react";
 import {useNavigate} from 'react-router-dom';
-
+import {
+  Navigate
+} from "react-router-dom";
 
 const Queries = props => {
 
+  const navigate = useNavigate();
   const {state} = useLocation();
+  if (!state) {
+    return (
+      <Navigate to="/" />
+    )
+  }
+
   const {uid} = state; //uid: user ID. if queries was not navigated to from the login page, state is null, which returns an error
   const {queries} = state;
 
-  const navigate = useNavigate();
 
   const navigateToThankYou = () => {
     if(uid.length != 0){
-      console.log(queries);
       navigate('/thankyou');
     }
   };
