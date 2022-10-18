@@ -19,7 +19,6 @@ const App = () => {
           
     </Routes>
     //<div> Hello World</div>
-
   )
 }
 export default App;
