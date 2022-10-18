@@ -9,9 +9,6 @@ import Queries from "./Queries";
 import Login from "./Login";
 import ThankYou from "./ThankYou";
 
-
-
-
 const App = () => {
   return (
 

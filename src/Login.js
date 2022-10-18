@@ -12,8 +12,8 @@ import { onSnapshot, collection } from "firebase/firestore";
 
 function Login() {
 
+  // State
   const [ profile, setProfile ] = useState([]);
-
   const [ firstName, setFirstName ] = useState([]);
   const [ lastName, setLastName ] = useState([]);
   const [ email, setEmail ] = useState([]);
@@ -46,7 +46,7 @@ function Login() {
   useEffect(
     () =>
       onSnapshot(collection(db, "queries"), (snapshot) =>
-        setQueries(snapshot.docs.slice(0,4).map((doc) => ({ ...doc.data(), id: doc.id })))
+        setQueries(snapshot.docs.sort(() => 0.5 - Math.random()).slice(0,4).map((doc) => ({ ...doc.data(), id: doc.id })))
       ),
     []
   );
@@ -81,7 +81,6 @@ function Login() {
         last_name: lastName
       });
     }
-
 
   };
 
