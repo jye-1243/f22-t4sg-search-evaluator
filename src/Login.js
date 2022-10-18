@@ -19,9 +19,10 @@ function Login() {
   const [ email, setEmail ] = useState([]);
   const [ id, setId ] = useState([]);
   const [queries, setQueries] = useState([]);
+  const [preExistingUsers, setExistingUsers] = useState([]);
 
   const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
-  // const clientId = '';
+
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -38,9 +39,9 @@ function Login() {
         const tempDoc = querySnapshot.docs.map((doc) => {
           return { id: doc.id }
         })
-        console.log(tempDoc)
       })
   }
+  
 
   useEffect(
     () =>
@@ -50,35 +51,43 @@ function Login() {
     []
   );
 
+  useEffect(
+    () =>
+    onSnapshot(collection(db, "user_info"), (snapshot) =>
+      setExistingUsers(snapshot.docs.map((doc) => ({ ...doc.data() })))
+    ),
+    []
+  );
+
   const onSuccess = (res) => {
     setProfile(res.profileObj.name);
-    console.log('success:', res);
     setId(res.profileObj.googleId);
     setEmail(res.profileObj.email);
     setFirstName(res.profileObj.givenName);
     setLastName(res.profileObj.familyName);
+    var exists = false;
 
+    for (let i = 0; i < preExistingUsers.length; i ++) {
+      if (id === preExistingUsers[i]['id']) {
+        exists = true;
+      }
+    }
 
-    db.collection("user_info").add({
-      email: email,
-      first_name: firstName,
-      id: id,
-      last_name: lastName
-    });
+    if (!exists && preExistingUsers.length > 0) {
+      db.collection("user_info").add({
+        email: email,
+        first_name: firstName,
+        id: id,
+        last_name: lastName
+      });
+    }
 
-    console.log(queries);
-
-    {queries.map((q) => (
-      console.log(q.returns[0])
-    ))}
 
   };
 
   const onFailure = (err) => {
-    console.log('failed:', err);
   };
   const logOut = () => {
-    console.log("Logged Out")
     setFirstName('');
     setLastName('');
     setEmail('');
@@ -97,9 +106,6 @@ function Login() {
   const navigate = useNavigate();
 
   const navigateToQueries = () => {
-    console.log(profile);
-    // 👇️ navigate to /contacts
-    console.log(email);
     navigate('/queries', { state: { uid: id, queries: queries} });
   };
 
