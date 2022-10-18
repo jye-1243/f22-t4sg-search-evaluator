@@ -46,7 +46,7 @@ const Queries = props => {
                 clientId={clientId}
                 buttonText="Logout"
                 onLogoutSuccess={logOut}
-                redirectUri={'http://localhost:3000/'}
+                redirectUri={'/'}
             />
       </div>
       {queries.map((q) => (
@@ -61,7 +61,7 @@ const Queries = props => {
           )}
           buttonText="Submit All"
           onLogoutSuccess={navigateToThankYou}
-          redirectUri={'http://localhost:3000/thankyou'}
+          redirectUri={'/thankyou'}
           />
     </div>
   )

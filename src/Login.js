@@ -119,7 +119,7 @@ function Login() {
             clientId={clientId}
             buttonText="Sign in with Google"
             onSuccess={onSuccess}
-            redirectUri={'http://localhost:3000'}
+            redirectUri={'/'}
             onFailure={onFailure}
             cookiePolicy={'single_host_origin'}
             isSignedIn={true}
@@ -129,7 +129,7 @@ function Login() {
             clientId={clientId}
             buttonText="Log Out"
             onLogoutSuccess={logOut}
-            redirectUri={'http://localhost:3000'}
+            redirectUri={'/'}
           />
         }
         </div>
