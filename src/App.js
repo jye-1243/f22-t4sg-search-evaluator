@@ -11,14 +11,14 @@ import ThankYou from "./ThankYou";
 
 const App = () => {
   return (
-    // <Routes> 
-    //       <Route path="/queries" element={<Queries/>} />
-    //       <Route path="/thankyou" element={<ThankYou/>} />
-    //       <Route path="/f22-t4sg-search-evaluator" element={<Login />} />
-    //       <Route path="/*" element={<Login />} />
+    <Routes> 
+          <Route path="/queries" element={<Queries/>} />
+          <Route path="/thankyou" element={<ThankYou/>} />
+          <Route path="/f22-t4sg-search-evaluator" element={<Login />} />
+          <Route path="/*" element={<Login />} />
           
-    // </Routes>
-    <div> Hello World</div>
+    </Routes>
+    // <div> Hello World</div>
 
   )
 }
