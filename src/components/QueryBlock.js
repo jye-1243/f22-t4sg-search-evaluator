@@ -5,16 +5,6 @@ import db from "./firebase";
 
 const QueryBlock = (props) => {
 
-const indices = [{i: 0}, {i: 1}, {i: 2}, {i: 3}, {i: 4}];
-
-const results = [
-  {i: 0, name: 'Search result 1', description: 'This is a description', url: 'https://cambridgema.gov'}, 
-  {i: 1, name: 'Search result 2', description: 'Currently describing Search Result 2. Drag and drop your tournament.py and answers.txt files to the area that says “Drag & Drop”. Be sure it has those exact filenames! If you upload a file with a different name, the autograder likeAccompanying text', url: 'https://cambridgema.gov'},
-  {i: 2, name: 'Search result 3', description: 'yea..h', url: 'https://cambridgema.gov'},
-  {i: 3, name: 'Four', description: 'Yeah yeah yeah', url: 'https://cambridgema.gov' },
-  {i: 4, name: 'Fifth search result', description: "Lorem Ipsum is simply dummy text. Search result", url: 'https://cambridgema.gov'}
-];
-
 
 const rele = [
   {i:0, r: -1},
@@ -22,9 +12,11 @@ const rele = [
   {i:2, r:-1},
   {i:3, r:-1},
   {i:4, r:-1}];
+  // rele is the initial state variable for the five results (indexed with i) and relevance (0, 1, 2, 3. -1 placeholder)
 
 
 const [data, setData] = useState(rele);
+//data is the state variable for relevance
 const [submitted, setSubmitted] = useState(false);
 
 
@@ -102,7 +94,7 @@ const handSubmit = () => {
                   <p>
                   {s[3].length > 80 ? s[3].substring(0, 80)+"..." : s[3]} 
                   </p>            
-                  <a href={s[2]} style={{ color: 'blue' }}>{s[2].length > 40 ? s[2].substring(0, 40) +"..." : s[2]} </a>
+                  <a href={s[2]} target="_blank" rel="noopener noreferrer" style={{ color: 'blue' }}>{s[2].length > 40 ? s[2].substring(0, 40) +"..." : s[2]} </a>
                 </Table.Cell>
 
                 <Table.Cell>
