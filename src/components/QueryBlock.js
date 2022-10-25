@@ -5,7 +5,6 @@ import db from "./firebase";
 
 const QueryBlock = (props) => {
 
-
 const rele = [
   {i:0, r: -1},
   {i:1, r:-1},
@@ -14,11 +13,11 @@ const rele = [
   {i:4, r:-1}];
   // rele is the initial state variable for the five results (indexed with i) and relevance (0, 1, 2, 3. -1 placeholder)
 
-
 const [data, setData] = useState(rele);
 //data is the state variable for relevance
 const [submitted, setSubmitted] = useState(false);
 
+const [allData, setAllData] = useState([]);
 
 const len = props.results.length;
 
@@ -40,18 +39,26 @@ const loaded = makeArr();
 // i: 0, 1, 2, 3, 4. index of results
 // j: 0 is i duplicate, 1 is text, 2 is url, 3 is description
 
-const handClick = (idx, rel) => {
 
+const handClick = (idx, rel) => {
+  // idx is the index of the result
+  // rel is the relevance of the result
   const newState = data.map(obj => {
     if (obj.i === idx) {
       return {...obj, r: rel};
     }
+    console.log(obj);
     return obj;
   });
   console.log(newState);
   setData(newState);
+  const newS = newState;
+  setAllData(allData => [...allData, newS]);
+  console.log("adding data");
+  console.log(allData);
+  console.log(props.query_id);
 };
-
+    
 const handSubmit = () => {
   const tmp = [];
   data.map(d =>{
@@ -67,28 +74,36 @@ const handSubmit = () => {
   setSubmitted(true);
 };
 
+const submitAll = () => {
+  allData.map(data => {
+    const tmp = [];
+    data.map(d => {
+      tmp.push(d.r)
+    });
+    db.collection("responses").add({
+      user_id: props.email,
+      query_id: props.query_id,
+      rankings: tmp
+    });
+  })
+  setSubmitted(true);
+}
+
   return (
-    <div >
+    <div>
       <p className="text-3xl text-gray-700 font-bold mb-5">
         {props.query}
       </p>
 
       <Table>
-        <Table.Head>
-          <Table.HeadCell>
-            Result
-          </Table.HeadCell>
-          <Table.HeadCell>
-            <span>
-              Rating
-            </span>
-          </Table.HeadCell>
-        </Table.Head>
+      <caption className="p-3 text-lg text-left text-gray-700 font-bold mb-5 bg-gray-50 sm:table-col mb-0">
+           RESULTS
+      </caption>
 
         <Table.Body className="divide-y">
           {loaded.map(s => {
               return (
-              <Table.Row key={s} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Row key={s} className="flex flex-col flex-no wrap lg:table-row mb-2 sm:mb-0 bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   <p className="text-l text-gray-700 font-bold mb-5">{s[1]} </p>
                   <p>
@@ -98,7 +113,9 @@ const handSubmit = () => {
                 </Table.Cell>
 
                 <Table.Cell>
-                  <Button.Group >
+                  <caption className="p-3 text-medium text-left text-gray-700 font-bold mb-2 sm:table-col sm:mb-0"> RATING
+                  </caption>
+                  <Button.Group className="display-flex xs:display-block sm:display-block m:display-block">
                     <Button color={data[s[0]].r == 0 ? "info" : "gray"} onClick={() => {
                       handClick(s[0], 0);
                     }}>
@@ -115,7 +132,7 @@ const handSubmit = () => {
                       Relevant
                     </Button>
                     <Button color={data[s[0]].r == 3 ? "info" : "gray"} onClick={() => {
-                            handClick(s[0], 3);
+                      handClick(s[0], 3);
                     }}>
                       Perfect
                     </Button>
@@ -129,13 +146,11 @@ const handSubmit = () => {
 
     <div className="w-3/12">
       <br></br>
-        <Button disabled={submitted} onClick={handSubmit}>
-          Submit
+        <Button disabled={submitted} onClick={submitAll}>
+          Submit!!!
         </Button>
         </div>
-
         <p>
-  
       </p>
     <br>
     </br>

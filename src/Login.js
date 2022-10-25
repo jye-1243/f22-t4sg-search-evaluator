@@ -110,10 +110,10 @@ function Login() {
   return (
     <div style={centerStyle} className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
 
-        <h2 className="text-3xl text-gray-700 font-bold mb-5">City of Cambridge Search Evaluator {firstName} </h2>
+        <h2 className="text-3xl text-gray-700 font-bold mb-5 text-center">City of Cambridge Search Evaluator {firstName} </h2>
         
         <div>
-        {profile.length === 0 ? <h3>Please Log In</h3>: <Button onClick={navigateToQueries}>Open survey</Button>} 
+        {profile.length === 0 ? <h3 class="text-medium text-center mb-3">Please Log In</h3>: <Button onClick={navigateToQueries}>Open survey</Button>} 
         {profile.length === 0 ?
             <GoogleLogin
             clientId={clientId}
