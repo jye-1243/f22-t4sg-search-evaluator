@@ -73,7 +73,9 @@ function Login() {
 
         
         
-            
+            <div>
+              
+            </div>
             <GoogleLogin
                 clientId={clientId}
                 buttonText="Sign in with Google"

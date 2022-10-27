@@ -1,4 +1,3 @@
-import QueryBlock from './components/QueryBlock'
 import React, { useEffect, useState } from 'react';
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';

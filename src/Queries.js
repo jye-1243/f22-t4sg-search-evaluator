@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 
 import { GoogleLogout } from 'react-google-login';
-import { Login } from './Login';
 
 const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
   
