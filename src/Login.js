@@ -66,17 +66,17 @@ function Login() {
     var exists = false;
 
     for (let i = 0; i < preExistingUsers.length; i ++) {
-      if (id === preExistingUsers[i]['id']) {
+      if (res.profileObj.googleId === preExistingUsers[i]['id']) {
         exists = true;
       }
     }
 
     if (!exists && preExistingUsers.length > 0) {
       db.collection("user_info").add({
-        email: email,
-        first_name: firstName,
-        id: id,
-        last_name: lastName
+        email: res.profileObj.email,
+        first_name: res.profileObj.givenName,
+        id: res.profileObj.googleId,
+        last_name: res.profileObj.familyName
       });
     }
 
