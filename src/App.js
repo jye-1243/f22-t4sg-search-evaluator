@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from 'react';
-// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import { gapi } from 'gapi-script';
-import {useNavigate} from 'react-router-dom';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Queries from "./Queries";
 import Login from "./Login";
@@ -17,7 +13,6 @@ const App = () => {
           <Route path="/*" element={<Login />} />
           
     </Routes>
-    //<div> Hello World</div>
   )
 }
 export default App;

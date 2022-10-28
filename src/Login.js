@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { GoogleLogin, GoogleLogout, useGoogleLogout } from 'react-google-login';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import {Button} from 'flowbite-react';
 import {useNavigate} from 'react-router-dom';
@@ -29,17 +29,7 @@ function Login() {
       });
     };
   gapi.load('client:auth2', initClient);
-  });
-
-  async function getMarker() {
-    const events = await firebase.firestore().collection('queries')
-    events.get().then((querySnapshot) => {
-        const tempDoc = querySnapshot.docs.map((doc) => {
-          return { id: doc.id }
-        })
-      })
-  }
-  
+  });  
 
   useEffect(
     () =>

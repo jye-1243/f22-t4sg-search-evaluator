@@ -1,7 +1,6 @@
 import {Table, Button} from 'flowbite-react';
 import React from 'react';
 import {useState} from 'react';
-import db from "./firebase";
 
 const QueryBlock = (props) => {
 
@@ -45,7 +44,6 @@ const handClick = (idx, rel) => {
     if (obj.i === idx) {
       return {...obj, r: rel};
     }
-    
     return obj;
   });
   setData(newState);
@@ -115,9 +113,6 @@ const handClick = (idx, rel) => {
           })}
     </Table.Body>
     </Table>
-
-    <br>
-    </br>
     </div>
   );
 }
