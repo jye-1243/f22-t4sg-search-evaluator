@@ -60,7 +60,7 @@ const handClick = (idx, rel) => {
 // pt-2 pb-2 pl-2 text-medium text-left mb-5 text-gray-700 font-bold bg-gray-50
 
   return (
-    <div>
+    <div className="my-4">
       <p className="text-3xl text-gray-700 font-bold mb-5">
         {props.query}
       </p>
