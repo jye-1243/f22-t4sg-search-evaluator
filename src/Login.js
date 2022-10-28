@@ -44,7 +44,7 @@ function Login() {
   useEffect(
     () =>
       onSnapshot(collection(db, "queries"), (snapshot) =>
-        setQueries(snapshot.docs.sort(() => 0.5 - Math.random()).slice(0,4).map((doc) => ({ ...doc.data(), id: doc.id })))
+        setQueries(snapshot.docs.sort(() => 0.5 - Math.random()).slice(0,5).map((doc) => ({ ...doc.data(), id: doc.id })))
       ),
     []
   );

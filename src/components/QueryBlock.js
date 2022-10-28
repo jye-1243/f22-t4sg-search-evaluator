@@ -3,10 +3,7 @@ import React from 'react';
 import {useState} from 'react';
 import db from "./firebase";
 
-let num = 0;
-
 const QueryBlock = (props) => {
-  num = num + 0.5;
 
 const rele = [
   {i:0, r: -1},
@@ -18,12 +15,10 @@ const rele = [
 
 const [data, setData] = useState(rele);
 //data is the state variable for relevance
-const [submitted, setSubmitted] = useState(false);
-
-const [allData, setAllData] = useState([]);
-
 const len = props.results.length;
 
+const setRel = props.setRel;
+const index = props.index;
 
 const makeArr = () => {
   let content = [];
@@ -50,47 +45,12 @@ const handClick = (idx, rel) => {
     if (obj.i === idx) {
       return {...obj, r: rel};
     }
-    console.log(obj);
+    
     return obj;
   });
-  console.log(newState);
   setData(newState);
-  const newS = newState;
-  setAllData(allData => [...allData, newS]);
-  console.log("adding data");
-  console.log(allData);
-  console.log(props.query_id);
+  setRel(index, idx, rel);
 };
-    
-const handSubmit = () => {
-  const tmp = [];
-  data.map(d =>{
-    tmp.push(d.r)
-  })
-
-  db.collection("responses").add({
-    user_id: props.email,
-    query_id: props.query_id,
-    rankings: tmp
-  });
-
-  setSubmitted(true);
-};
-
-const submitAll = () => {
-  allData.map(data => {
-    const tmp = [];
-    data.map(d => {
-      tmp.push(d.r)
-    });
-    db.collection("responses").add({
-      user_id: props.email,
-      query_id: props.query_id,
-      rankings: tmp
-    });
-  })
-  setSubmitted(true);
-}
 
 //"overflow-y-auto"
 // text-3xl text-gray-700 font-bold mb-5
@@ -107,7 +67,7 @@ const submitAll = () => {
         {props.query}
       </p>
 
-      <Table>
+      <Table className="table-fixed">
       <caption className="p-3 text-lg text-left text-gray-700 font-bold mb-0 bg-gray-50">
            RESULTS
       </caption>
@@ -115,9 +75,9 @@ const submitAll = () => {
         <Table.Body className="divide-y">
           {loaded.map(s => {
               return (
-              <Table.Row key={s} className="flex flex-col mb-2 sm:mb-0 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell className="flex flex-col whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                  <p className="flex flex-col text-l text-gray-700 font-bold mb-5">{s[1]} </p>
+              <Table.Row key={s} className="flex flex-col flex-no wrap lg:table-row mb-2 sm:mb-0 bg-white dark:border-gray-700 dark:bg-gray-800">
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                  <p className="text-l text-gray-700 font-bold mb-5">{s[1]} </p>
                   <p>
                   {s[3].length > 80 ? s[3].substring(0, 80)+"..." : s[3]} 
                   </p>            
@@ -156,14 +116,6 @@ const submitAll = () => {
     </Table.Body>
     </Table>
 
-    <div className="w-3/12">
-      <br></br>
-        <Button disabled={submitted} onClick={submitAll} size="100%">
-          Submit Responses for Query # {num}
-        </Button>
-        </div>
-        <p>
-      </p>
     <br>
     </br>
     </div>

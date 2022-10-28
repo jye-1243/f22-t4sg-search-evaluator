@@ -8,11 +8,23 @@ import {
   Navigate
 } from "react-router-dom";
 
+
+import db from "./firebase";
+
 import { GoogleLogout } from 'react-google-login';
 
 const clientId = '1044211576984-ieq8c2m6h75hqb24dvgrtol8krfdvci4.apps.googleusercontent.com';
   
 const Queries = props => {
+
+  const [allRelData, setAllRelData] = useState([
+    [-1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1],
+  ]);
+
 
   const navigate = useNavigate();
   const {state} = useLocation();
@@ -24,7 +36,6 @@ const Queries = props => {
 
   const {uid} = state; //uid: user ID. if queries was not navigated to from the login page, state is null, which returns an error
   const {queries} = state;
-
 
   const navigateToThankYou = () => {
     if(uid.length != 0){
@@ -38,6 +49,29 @@ const Queries = props => {
     window.location.reload();
   };
 
+  const setRelevance = (query, entry, relevance) => {
+    let tmp = allRelData;
+    tmp[query][entry] = relevance;
+
+    setAllRelData(tmp);
+  }
+
+  const onSubmitAll = () => {
+    for (let i = 0; i < allRelData.length; i++) {
+      let tmp = allRelData[i];
+      let q = queries[i];
+
+      db.collection("responses").add({
+        user_id: uid,
+        query_id: q.id,
+        rankings: tmp
+      });
+    }
+
+    navigate('/thankyou');
+    
+  }
+
   return (
     <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
       <div style={{display: "flex", justifyContent: "right"}}>
@@ -48,13 +82,13 @@ const Queries = props => {
                 redirectUri={'/'}
             />
       </div>
-      {queries.map((q) => (
-      <QueryBlock key={q.id} query={"query: " + q.query_text} query_id={q.id} results={q.returns} email={uid}/>
+      {queries.map((q, index) => (
+      <QueryBlock key={q.id} query={"query: " + q.query_text} query_id={q.id} results={q.returns} email={uid} setRel={setRelevance} index={index}/>
       ))}
       <GoogleLogout
           clientId={clientId}
           render={(renderProps) => (
-            <Button size='xl' onClick={renderProps.onClick} disabled={renderProps.disabled}>
+            <Button size='xl' onClick={onSubmitAll} disabled={renderProps.disabled}>
               Submit All
             </Button>
           )}
