@@ -1,10 +1,8 @@
 import {Table, Button} from 'flowbite-react';
 import React from 'react';
 import {useState} from 'react';
-import db from "./firebase";
 
 const QueryBlock = (props) => {
-
 
 const rele = [
   {i:0, r: -1},
@@ -14,14 +12,12 @@ const rele = [
   {i:4, r:-1}];
   // rele is the initial state variable for the five results (indexed with i) and relevance (0, 1, 2, 3. -1 placeholder)
 
-
 const [data, setData] = useState(rele);
 //data is the state variable for relevance
-const [submitted, setSubmitted] = useState(false);
-
-
 const len = props.results.length;
 
+const setRel = props.setRel;
+const index = props.index;
 
 const makeArr = () => {
   let content = [];
@@ -40,55 +36,44 @@ const loaded = makeArr();
 // i: 0, 1, 2, 3, 4. index of results
 // j: 0 is i duplicate, 1 is text, 2 is url, 3 is description
 
-const handClick = (idx, rel) => {
 
+const handClick = (idx, rel) => {
+  // idx is the index of the result
+  // rel is the relevance of the result
   const newState = data.map(obj => {
     if (obj.i === idx) {
       return {...obj, r: rel};
     }
     return obj;
   });
-  console.log(newState);
   setData(newState);
+  setRel(index, idx, rel);
 };
 
-const handSubmit = () => {
-  const tmp = [];
-  data.map(d =>{
-    tmp.push(d.r)
-  })
-
-  db.collection("responses").add({
-    user_id: props.email,
-    query_id: props.query_id,
-    rankings: tmp
-  });
-
-  setSubmitted(true);
-};
+//"overflow-y-auto"
+// text-3xl text-gray-700 font-bold mb-5
+// p-3 text-lg text-left text-gray-700 font-bold mb-5 bg-gray-50 sm:table-col mb-0
+// divide-y
+// flex flex-col flex-no wrap mb-2 sm:mb-0 bg-white dark:border-gray-700 dark:bg-gray-800
+// flex flex-col flex-wrap whitespace-nowrap font-medium text-gray-900 dark:text-white
+// flex flex-col text-l text-gray-700 font-bold mb-5
+// pt-2 pb-2 pl-2 text-medium text-left mb-5 text-gray-700 font-bold bg-gray-50
 
   return (
-    <div >
+    <div className="my-4">
       <p className="text-3xl text-gray-700 font-bold mb-5">
         {props.query}
       </p>
 
-      <Table>
-        <Table.Head>
-          <Table.HeadCell>
-            Result
-          </Table.HeadCell>
-          <Table.HeadCell>
-            <span>
-              Rating
-            </span>
-          </Table.HeadCell>
-        </Table.Head>
+      <Table className="table-fixed">
+      <caption className="p-3 text-lg text-left text-gray-700 font-bold mb-0 bg-gray-50">
+           RESULTS
+      </caption>
 
         <Table.Body className="divide-y">
           {loaded.map(s => {
               return (
-              <Table.Row key={s} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Row key={s} className="flex flex-col flex-no wrap lg:table-row mb-2 sm:mb-0 bg-white dark:border-gray-700 dark:bg-gray-800">
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                   <p className="text-l text-gray-700 font-bold mb-5">{s[1]} </p>
                   <p>
@@ -98,7 +83,9 @@ const handSubmit = () => {
                 </Table.Cell>
 
                 <Table.Cell>
-                  <Button.Group >
+                  <p className="pt-2 pb-2 pl-2 text-medium text-left mb-5 text-gray-700 font-bold bg-gray-50"> RATING
+                  </p>
+                  <Button.Group>
                     <Button color={data[s[0]].r == 0 ? "info" : "gray"} onClick={() => {
                       handClick(s[0], 0);
                     }}>
@@ -115,7 +102,7 @@ const handSubmit = () => {
                       Relevant
                     </Button>
                     <Button color={data[s[0]].r == 3 ? "info" : "gray"} onClick={() => {
-                            handClick(s[0], 3);
+                      handClick(s[0], 3);
                     }}>
                       Perfect
                     </Button>
@@ -126,20 +113,8 @@ const handSubmit = () => {
           })}
     </Table.Body>
     </Table>
-
-    <div className="w-3/12">
-      <br></br>
-        <Button disabled={submitted} onClick={handSubmit}>
-          Submit
-        </Button>
-        </div>
-
-        <p>
-  
-      </p>
-    <br>
-    </br>
     </div>
   );
 }
+
 export default QueryBlock;
