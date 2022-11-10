@@ -65,7 +65,7 @@ const handClick = (idx, rel) => {
         {props.query}
       </p>
 
-      <Table className="table-fixed">
+      <Table>
       <caption className="p-3 text-lg text-left text-gray-700 font-bold mb-0 bg-gray-50">
            RESULTS
       </caption>
