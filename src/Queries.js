@@ -57,10 +57,17 @@ const Queries = props => {
   }
 
   const onSubmitAll = () => {
+    // check if any of the relevance values are -1
+    
     for (let i = 0; i < allRelData.length; i++) {
+      for (let j = 0; j < allRelData[i].length; j++) {
+        if (allRelData[i][j] === -1) {
+          alert("Please rate all results for all queries");
+          return;
+        }
+      }
       let tmp = allRelData[i];
       let q = queries[i];
-
       db.collection("responses").add({
         user_id: uid,
         query_id: q.id,
