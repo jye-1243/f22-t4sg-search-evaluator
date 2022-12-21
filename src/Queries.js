@@ -61,7 +61,7 @@ const Queries = props => {
       let tmp = allRelData[i];
       let q = queries[i];
 
-      db.collection("responses").add({
+      db.collection("new_responses").add({
         user_id: uid,
         query_id: q.id,
         rankings: tmp
