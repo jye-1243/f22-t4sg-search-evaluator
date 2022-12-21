@@ -66,6 +66,8 @@ const Queries = props => {
           return;
         }
       }
+    }
+    for (let i = 0; i < allRelData.length; i++) {
       let tmp = allRelData[i];
       let q = queries[i];
       db.collection("new_responses").add({
