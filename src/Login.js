@@ -33,7 +33,7 @@ function Login() {
 
   useEffect(
     () =>
-      onSnapshot(collection(db, "queries"), (snapshot) =>
+      onSnapshot(collection(db, "new_queries"), (snapshot) =>
         setQueries(snapshot.docs.sort(() => 0.5 - Math.random()).slice(0,5).map((doc) => ({ ...doc.data(), id: doc.id })))
       ),
     []
@@ -41,7 +41,7 @@ function Login() {
 
   useEffect(
     () =>
-    onSnapshot(collection(db, "user_info"), (snapshot) =>
+    onSnapshot(collection(db, "new_user_info"), (snapshot) =>
       setExistingUsers(snapshot.docs.map((doc) => ({ ...doc.data() })))
     ),
     []
@@ -62,7 +62,7 @@ function Login() {
     }
 
     if (!exists && preExistingUsers.length > 0) {
-      db.collection("user_info").add({
+      db.collection("new_user_info").add({
         email: res.profileObj.email,
         first_name: res.profileObj.givenName,
         id: res.profileObj.googleId,
